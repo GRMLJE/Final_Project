@@ -71,35 +71,24 @@ if(digitalRead(sw3)==0){
 }
 
 height_sens();
-blueValue = NULL;
-redValue = NULL;
-greenValue = NULL;
 
-if(digitalRead(sw1)==0){
  color_sens();
 
 //auto funkcija za kat 1 
-if(redValue>greenValue && redValue>blueValue && redValue > 60){
-    KAT1();
-}
-else if(redValue>100 && greenValue>100 && blueValue>100){
-    KAT2();   
-}else if(redValue<50 && greenValue<50 && blueValue<50){
-    KAT3();  
-}else{
-  ZERO();
+if(redValue<50 && greenValue<50 && blueValue<50){
+  KAT3();
+}else if(redValue>200 && greenValue>200 && blueValue>200){
+  KAT2();
+}else if(redValue>greenValue && redValue>blueValue){
+  KAT1();
 }
 
-}
-Serial.print(blueValue);
 Serial.print(redValue);
+Serial.print("\t");
 Serial.print(greenValue);
 Serial.print("\t");
-blueValue = NULL;
-redValue = NULL;
-greenValue = NULL;
-
-
+Serial.print(blueValue);
+Serial.print("\t");
 
 }
   
@@ -132,7 +121,7 @@ int getGreenPW() {
   return PW;
  
 }
- 
+ s
 
 int getBluePW() {
  
@@ -159,10 +148,13 @@ void KAT1(){
        //ponovno citanje sensora visine
         height_sens();
        //
+        Serial.print("AKTIVAN1");
+        Serial.print("\t");
     }
        digitalWrite(inA1,LOW);
        digitalWrite(inA2,LOW);
        analogWrite(pwmA,0);
+      
   }
 
     
@@ -178,10 +170,13 @@ void KAT2(){
           //ponovno citanje sensora visine
            height_sens();
           //
+           Serial.print("AKTIVAN2");
+           Serial.print("\t");
       }
           digitalWrite(inA1,LOW);
           digitalWrite(inA2,LOW);
           analogWrite(pwmA,0);
+          
   }
   
 void KAT3(){
@@ -195,13 +190,15 @@ void KAT3(){
           //ponovno citanje sensora visine
            height_sens();
           //
+           Serial.print("AKTIVAN3");
+           Serial.print("\t");
       }
           digitalWrite(inA1,LOW);
           digitalWrite(inA2,LOW);
           analogWrite(pwmA,0);
   }
 void ZERO(){
-  while(distance!=1189){
+  while(distance!=2){
           //kontorla dizalice
           digitalWrite(inA1, distance < 8 ? LOW : HIGH);
           digitalWrite(inA2, distance < 8 ? HIGH : LOW);
